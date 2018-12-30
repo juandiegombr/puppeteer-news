@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Títulos de noticias</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      background-color: #eee;
+      font-family: 'Helvetica', 'Courier New', 'Courier', 'monospace'
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      width: 800px;
+      background-color: white;
+      padding: 2em;
+    }
+    textarea {
+      margin-top: 1em;
+      margin-bottom: 1em;
+      border-radius: 4px;
+      border-color: #ccc;
+    }
+    .buttons {
+      display: flex;
+    }
+    button {
+      flex: 1;
+      padding: 1em;
+      background-color: #eee;
+      border-radius: 4px;
+    }
+    button:last-child {
+      margin-left: 1rem;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <label for="links">Introduce los links de las noticias:</label>
+    <textarea id="links" name="titles" id="" cols="30" rows="10"></textarea>
+    <div class="buttons">
+      <button id="scrape">
+        <i id="loader" class="fas fa-spinner fa-spin hidden"></i>
+        Obtener títulos</button>
+      <button id="copy">Copiar</button>
+    </div>
+    <div id="content"></div>
+  </div>
+  <script>
+    const scrapeButton = document.getElementById('scrape')
+    const links = document.getElementById('links')
+    const div = document.getElementById('content')
+    const copy = document.getElementById('copy')
+    const loader = document.getElementById('loader')
+    
+    const copyToClipboard = () => {
+      const result = document.getElementById('content').innerText
+      const el = document.createElement('textarea')
+      el.value = result
+      document.body.appendChild(el)
+      el.select()
+      if (document.execCommand('copy')) {
+        console.log('copied')
+      } else {
+        console.log('Not copied')
+      }
+      document.body.removeChild(el)
+    }
+    const isLoading = (status) => {
+      if (status) {
+        scrapeButton.classList.add('loading')
+        loader.classList.remove('hidden')
+      } else {
+        scrapeButton.classList.remove('loading')
+        loader.classList.add('hidden')
+      }
+    }
+    const generateTitle = (title) => {
+      var titleElement = document.createElement('p')
+      var text = document.createTextNode(title)
+      titleElement.appendChild(text)
+      div.appendChild(titleElement)
+    }
+    const generateUrl = (url) => {
+      var urlElement = document.createElement('p')
+      var separator = document.createElement('br')
+      var text = document.createTextNode(url)
+      urlElement.appendChild(text)
+      div.appendChild(urlElement)
+    }
+    const generateNew = ({title, url}) => {
+      generateTitle(title)
+      generateUrl(url)
+    }
+    const scrape = async () => {
+      isLoading(true)
+      await fetch('http://localhost:3000/scrape', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({links: links.value.split('\n')})
+      })
+      .then(res => {
+        return res.text()
+      })
+      .then(data => {
+        const newList = JSON.parse(data)
+        for (let i = 0; i < newList.length; i++) {
+          const newItem = newList[i]
+          generateNew(newItem)
+        }
+        isLoading(false)
+      })
+    }
+    
+    scrapeButton.addEventListener('click', scrape)
+    copy.addEventListener('click', copyToClipboard)
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "puppetter-news",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "nodemon index.js",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "puppeteer": "^1.8.0"
+  },
+  "peerDependencies": {
+    "eslint-config-airbnb-base": "^13.1.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint-plugin-import": "^2.14.0",
+    "nodemon": "^1.18.4",
+    "prettier-eslint": "^8.8.2"
+  }
+}
