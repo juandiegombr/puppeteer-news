@@ -3,7 +3,7 @@ FROM node:8
 # Create app directory
 WORKDIR /usr/src/app
 
-RUN git clone https://github.com/juandiegombr/puppeteer-news.git
+RUN git clone https://github.com/juandiegombr/puppeteer-news.git /usr/src/app
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)

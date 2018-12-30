@@ -103,7 +103,7 @@
     }
     const scrape = async () => {
       isLoading(true)
-      await fetch('http://localhost:3000/scrape', {
+      await fetch('http://localhost:8080/scrape', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
