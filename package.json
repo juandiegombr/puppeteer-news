@@ -2,6 +2,9 @@
   "name": "puppetter-news",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": "8.2.1"
+  },
   "main": "index.js",
   "scripts": {
     "serve": "nodemon index.js",
