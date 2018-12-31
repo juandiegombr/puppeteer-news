@@ -111,7 +111,7 @@
       while (myNode.firstChild) {
         myNode.removeChild(myNode.firstChild)
       }
-      await fetch('http://localhost:8080/scrape', {
+      await fetch('http://localhost/scrape', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
