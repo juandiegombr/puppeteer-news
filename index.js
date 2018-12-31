@@ -40,7 +40,7 @@ const scrapePages = async links => {
   browser.close()
   return elements
 }
-
-app.listen(process.env.PORT || 80, () => {
-  console.log('Example app listening on port 80!')
+const PORT = process.env.PORT || 80
+app.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}!`)
 })
