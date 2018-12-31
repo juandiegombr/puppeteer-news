@@ -1,4 +1,9 @@
-FROM node:8
+# FROM node:8
+FROM buildkite/puppeteer
+
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y git
 
 # Create app directory
 WORKDIR /usr/src/app

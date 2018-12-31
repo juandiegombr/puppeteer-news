@@ -19,12 +19,15 @@ app.post('/scrape', async (req, res) => {
 })
 
 const scrapePages = async links => {
-  const browser = await puppeteer.launch({ headless: true })
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox']
+  })
   const page = await browser.newPage()
   const elements = []
   for (let i = 0; i < links.length; i++) {
     const url = links[i]
-    await page.goto(`${url}`, { timeout: 10000 })
+    await page.goto(`${url}`, { timeout: 20000 })
     const result = await page.evaluate(() => {
       let el = document.querySelectorAll('h1')[0].innerText
       if (el === '') {
