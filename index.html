@@ -111,7 +111,7 @@
       while (myNode.firstChild) {
         myNode.removeChild(myNode.firstChild)
       }
-      await fetch('http://localhost/scrape', {
+      await fetch('https://puppeteer-news.herokuapp.com/scrape', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

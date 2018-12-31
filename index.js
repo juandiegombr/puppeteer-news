@@ -21,7 +21,7 @@ app.post('/scrape', async (req, res) => {
 const scrapePages = async links => {
   const browser = await puppeteer.launch({
     headless: true,
-    args: ['--no-sandbox']
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
   })
   const page = await browser.newPage()
   const elements = []
